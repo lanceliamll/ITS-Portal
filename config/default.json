@@ -1,3 +1,4 @@
 {
-  "mongoURI": "mongodb+srv://admin:admin1@its-portal-mzwia.mongodb.net/test?retryWrites=true"
+  "mongoURI": "mongodb+srv://admin:admin1@its-portal-mzwia.mongodb.net/test?retryWrites=true",
+  "jwtSecret": "youshouldkeepmesecret"
 }
