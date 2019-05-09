@@ -1,29 +1,35 @@
 const express = require("express");
-const User = require("../../models/User");
 const Subject = require("../../models/Subject");
 const authorization = require("../../middleware/authorization");
-const mongoose = require("mongoose");
 const router = express.Router();
+const validateSubjectInput = require("../../validation/subject");
 
 // @GET ROUTES //
+
+// @Route api/subject/:subjectName
+// Get all the subjects by name
+router.get("/:subjectName", authorization, async (req, res) => {
+  const { subjectName } = req.params;
+
+  try {
+    const subjects = await Subject.find({ subjectName })
+      .sort({ dateCreated: -1 })
+      .populate("user", ["schoolId", "firstName", "lastName"]);
+
+    if (!subjects) {
+      res.status(404).json({ message: "No subject found!" });
+    }
+
+    res.json(subjects);
+  } catch (error) {
+    res.status(500).json({ message: "Server Error! Please Try Again" });
+  }
+});
 
 // @Route api/subject/profile
 // Get all enrolled subject
 router.get("/profile", authorization, async (req, res) => {
   const { id } = req.user;
-
-  // Subject.find({ user: id })
-  //   .then(subject => {
-  //     if (!subject) {
-  //       return res.status(400).json({
-  //         message: "There are no currently enrolled subject to this user"
-  //       });
-  //     }
-  //     res.json(subject);
-  //   })
-  //   .catch(() => {
-  //     res.status(500).json({ message: "Server Error! Please Try Again" });
-  //   });
 
   try {
     let subject = await Subject.find({ user: id }).populate("user", [
@@ -50,6 +56,10 @@ router.get("/profile", authorization, async (req, res) => {
 //Enroll a user based on the params id
 
 router.post("/enroll/:id", authorization, async (req, res) => {
+  const { errors, isValid } = validateSubjectInput(req.body);
+  if (!isValid) {
+    return res.status(400).json(errors);
+  }
   let {
     subjectName,
     prelimQuiz1,
@@ -130,6 +140,14 @@ router.post("/enroll/:id", authorization, async (req, res) => {
   //Find a student and save
 
   try {
+    const isEnrolled = await Subject.findOne({ subjectName });
+
+    if (isEnrolled) {
+      return res
+        .status(400)
+        .json({ message: "Student is already enrolled to this subject" });
+    }
+
     const subject = await new Subject(subjectFields);
     await subject.save();
     return res.json(subject);
@@ -142,6 +160,10 @@ router.post("/enroll/:id", authorization, async (req, res) => {
 // @Route api/subject/grades/:id
 
 router.put("/grades/:id", authorization, async (req, res) => {
+  const { errors, isValid } = validateSubjectInput(req.body);
+  if (!isValid) {
+    return res.status(400).json(errors);
+  }
   const { id } = req.params;
   let {
     subjectName,
@@ -224,5 +246,24 @@ router.put("/grades/:id", authorization, async (req, res) => {
   } catch (error) {
     res.status(500).json({ message: "Server error. Please try again" });
   }
-}),
-  (module.exports = router);
+});
+
+// @DELETE ROUTES //
+// @Route api/subject/detele/:subjectId
+// Unenroll student to the subject
+
+router.delete("/delete/:subjectId", authorization, async (req, res) => {
+  const { subjectId } = req.params;
+  try {
+    const subject = await Subject.findById(subjectId);
+    if (!subject) {
+      return res.status(404).json({ message: "No subject found" });
+    }
+    await subject.remove();
+    res.json({ message: "Deleted Successfuly" });
+  } catch (error) {
+    res.status(500).json({ message: "Server Error please try again." });
+  }
+});
+
+module.exports = router;

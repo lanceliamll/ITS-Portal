@@ -68,7 +68,10 @@ router.post(
           res.json({ token });
         }
       );
-    } catch (error) {}
+    } catch (error) {
+      console.log(error.message);
+      res.status(500).json({ message: "Server Error! Please try again." });
+    }
   }
 );
 
