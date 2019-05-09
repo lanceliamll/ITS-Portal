@@ -12,7 +12,7 @@ router.get("/:subjectName", authorization, async (req, res) => {
   const { subjectName } = req.params;
 
   try {
-    const subjects = await Subject.find({ subjectName })
+    let subjects = await Subject.find({ subjectName })
       .sort({ dateCreated: -1 })
       .populate("user", ["schoolId", "firstName", "lastName"]);
 
@@ -140,7 +140,7 @@ router.post("/enroll/:id", authorization, async (req, res) => {
   //Find a student and save
 
   try {
-    const isEnrolled = await Subject.findOne({ subjectName });
+    let isEnrolled = await Subject.findOne({ subjectName });
 
     if (isEnrolled) {
       return res
@@ -148,7 +148,7 @@ router.post("/enroll/:id", authorization, async (req, res) => {
         .json({ message: "Student is already enrolled to this subject" });
     }
 
-    const subject = await new Subject(subjectFields);
+    let subject = await new Subject(subjectFields);
     await subject.save();
     return res.json(subject);
   } catch (error) {
@@ -255,7 +255,7 @@ router.put("/grades/:id", authorization, async (req, res) => {
 router.delete("/delete/:subjectId", authorization, async (req, res) => {
   const { subjectId } = req.params;
   try {
-    const subject = await Subject.findById(subjectId);
+    let subject = await Subject.findById(subjectId);
     if (!subject) {
       return res.status(404).json({ message: "No subject found" });
     }

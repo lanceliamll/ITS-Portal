@@ -161,7 +161,91 @@ router.post(
   }
 );
 
+// @Route api/user/makeadmin/:id
+// Make a user an admin
+
+router.post("/makeadmin/:id", authorization, async (req, res) => {
+  const { id } = req.params;
+  try {
+    let user = await User.findById(id).updateOne({ isAdmin: true });
+    if (!user) {
+      return res.status(404).json({ message: "User not found!" });
+    }
+    res.json({ message: "Updated" });
+  } catch (error) {
+    res.status(500).json({ message: "Server error, Please try again." });
+  }
+});
+
+// @Route api/user/removeadmin/:id
+// Remove admin rights
+
+router.post("/removeadmin/:id", authorization, async (req, res) => {
+  const { id } = req.params;
+  try {
+    let user = await User.findById(id).updateOne({ isAdmin: false });
+    if (!user) {
+      return res.status(404).json({ message: "User not found!" });
+    }
+    res.json({ message: "Updated" });
+  } catch (error) {
+    res.status(500).json({ message: "Server error, Please try again." });
+  }
+});
+
 // @PUT REQUESTS //
+
+// @Route api/user/changepassword/:id
+
+router.put(
+  "/changepassword/:id",
+  [
+    check(
+      "newPasswordInput",
+      "Characters should be more than 3 Characters"
+    ).isLength({ min: 3 }),
+    check(
+      "confirmNewPasswordInput",
+      "Characters should be more than 3 Characters"
+    ).isLength({ min: 3 }),
+    check("newPasswordInput", "New Password field is required")
+      .not()
+      .isEmpty(),
+    check("confirmNewPasswordInput", "Confirm New Password field is required")
+      .not()
+      .isEmpty()
+  ],
+  authorization,
+  async (req, res) => {
+    const errors = await validationResult(req);
+    if (!errors.isEmpty()) {
+      return res.status(400).json({ errors: errors.array() });
+    }
+    const { id } = req.params;
+    const { newPasswordInput, confirmNewPasswordInput } = req.body;
+
+    try {
+      if (newPasswordInput !== confirmNewPasswordInput) {
+        return res.status(404).json({ message: "Invalid Credentials" });
+      }
+
+      let newPasswordHashed = await bcrypt.hash(newPasswordInput, 12);
+
+      let user = await User.findById(id).updateOne({
+        password: newPasswordHashed
+      });
+
+      if (!user) {
+        return res.status(404).json({ message: "User not found!" });
+      }
+
+      res.json({ message: "Updated Successfully" });
+      //Check if the newPasswordInput is the same as the Confirm Password Input
+    } catch (error) {
+      res.status(500).json({ message: "Server error, Please try again." });
+    }
+  }
+);
 
 // @DELETE REQUESTS //
 
