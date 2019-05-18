@@ -1,0 +1,9 @@
+.text-decoration {
+  text-decoration: none;
+  color: white;
+}
+
+.navbar-logo {
+  height: 6vh;
+  width: 25vh;
+}

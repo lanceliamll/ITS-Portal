@@ -5,17 +5,28 @@
   "main": "server.js",
   "scripts": {
     "start": "node server",
-    "server": "nodemon src/server/server.js"
+    "server": "nodemon src/server/server.js",
+    "client": "cd src && npm start --prefix client",
+    "dev": "concurrently \"npm run server\" \"npm run client\""
   },
   "author": "Lance Liam De Padua",
   "license": "ISC",
   "dependencies": {
+    "@material-ui/styles": "^3.0.0-alpha.10",
+    "axios": "^0.18.0",
     "bcryptjs": "^2.4.3",
     "config": "^3.1.0",
     "express": "^4.16.4",
     "express-validator": "^5.3.1",
     "jsonwebtoken": "^8.5.1",
-    "mongoose": "^5.5.5"
+    "moment": "^2.24.0",
+    "mongoose": "^5.5.5",
+    "react-moment": "^0.9.2",
+    "react-redux": "^7.0.3",
+    "react-router-dom": "^5.0.0",
+    "redux": "^4.0.1",
+    "redux-devtools-extension": "^2.13.8",
+    "redux-thunk": "^2.3.0"
   },
   "devDependencies": {
     "concurrently": "^4.1.0"
