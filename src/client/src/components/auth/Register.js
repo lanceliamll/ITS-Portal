@@ -1,8 +1,12 @@
 import { Button, TextField } from "@material-ui/core";
+import axios from "axios";
+import PropTypes from "prop-types";
 import React, { Fragment, useState } from "react";
+import { connect } from "react-redux";
+import { setAlert } from "../../actions/alert";
 import "./Register.css";
 
-const Register = () => {
+const Register = ({ setAlert }) => {
   const [registerData, setRegisterData] = useState({
     schoolId: "",
     firstName: "",
@@ -25,12 +29,34 @@ const Register = () => {
     setRegisterData({ ...registerData, [e.target.name]: e.target.value });
   };
 
-  const onSubmit = e => {
+  const onSubmit = async e => {
     e.preventDefault();
     if (password !== password2) {
-      console.log("Passwords do not match");
+      setAlert("Passwords do not match", "secondary");
     } else {
-      console.log(registerData);
+      const registerUser = {
+        schoolId,
+        firstName,
+        lastName,
+        email,
+        password
+      };
+
+      try {
+        const config = {
+          headers: {
+            "Content-Type": "application/json"
+          }
+        };
+
+        const body = JSON.stringify(registerUser);
+
+        const res = await axios.post("/api/user/register", body, config);
+
+        console.log(res.data);
+      } catch (error) {
+        console.error(error.message);
+      }
     }
   };
 
@@ -121,4 +147,11 @@ const Register = () => {
   );
 };
 
-export default Register;
+Register.propTypes = {
+  setAlert: PropTypes.func.isRequired
+};
+
+export default connect(
+  null,
+  { setAlert }
+)(Register);
