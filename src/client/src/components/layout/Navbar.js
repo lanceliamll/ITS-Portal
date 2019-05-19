@@ -3,8 +3,11 @@ import Button from "@material-ui/core/Button";
 import Toolbar from "@material-ui/core/Toolbar";
 import Typography from "@material-ui/core/Typography";
 import { makeStyles } from "@material-ui/styles";
-import React from "react";
+import PropTypes from "prop-types";
+import React, { Fragment } from "react";
+import { connect } from "react-redux";
 import { Link } from "react-router-dom";
+import { logoutUser } from "../../actions/authAction";
 import icctLogo from "../../static/icct-logo.png";
 import "./Navbar.css";
 
@@ -21,8 +24,53 @@ const useStyles = makeStyles({
   }
 });
 
-const Navbar = () => {
+const Navbar = ({ auth: { isAuthenticated, loading, user }, logoutUser }) => {
   const classes = useStyles();
+
+  const adminLinks = (
+    <Button color="inherit">
+      <Link className="text-decoration" to="/enroll">
+        Dashboard
+      </Link>
+    </Button>
+  );
+
+  const authenticatedLinks = (
+    <div>
+      {user !== null && user.isAdmin ? adminLinks : null}
+      <Button color="inherit">
+        <Link className="text-decoration" to="/grades">
+          Grades
+        </Link>
+      </Button>
+      <Button color="inherit">
+        <Link className="text-decoration" to="#!" onClick={logoutUser}>
+          Logout
+        </Link>
+      </Button>
+    </div>
+  );
+
+  const guestLinks = (
+    <div>
+      <Button color="inherit">
+        <Link className="text-decoration" to="/">
+          Home
+        </Link>
+      </Button>
+      <Button color="inherit">
+        <Link className="text-decoration" to="/register">
+          Register
+        </Link>
+      </Button>
+      <Button color="inherit">
+        <Link className="text-decoration" to="/login">
+          Login
+        </Link>
+      </Button>
+    </div>
+  );
+
   return (
     <div>
       <div className={classes.root}>
@@ -40,7 +88,12 @@ const Navbar = () => {
               </Button>
             </Typography>
             {/* Navigation Buttons */}
-            {/* {isAuthenticated ? authenticatedLinks : guestLinks} */}
+            {!loading && (
+              <Fragment>
+                {" "}
+                {isAuthenticated ? authenticatedLinks : guestLinks}{" "}
+              </Fragment>
+            )}
           </Toolbar>
         </AppBar>
       </div>
@@ -48,4 +101,15 @@ const Navbar = () => {
   );
 };
 
-export default Navbar;
+Navbar.propTypes = {
+  logout: PropTypes.func.isRequired
+};
+
+const mapStateToProps = state => ({
+  auth: state.auth
+});
+
+export default connect(
+  mapStateToProps,
+  { logoutUser }
+)(Navbar);

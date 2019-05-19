@@ -5,6 +5,7 @@ import {
   AUTH_ERROR,
   LOGIN_FAILED,
   LOGIN_SUCCESS,
+  LOGOUT_USER,
   REGISTER_FAILED,
   REGISTER_SUCCESS,
   USER_LOADED
@@ -101,4 +102,10 @@ export const registerUser = ({
       type: REGISTER_FAILED
     });
   }
+};
+
+export const logoutUser = () => dispatch => {
+  dispatch({
+    type: LOGOUT_USER
+  });
 };
