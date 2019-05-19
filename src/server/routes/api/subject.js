@@ -46,7 +46,7 @@ router.get("/profile", authorization, async (req, res) => {
     res.json(subject);
   } catch (error) {
     console.log(error.message);
-    res.status(500).json({ message: "Server Error! Please Try Again" });
+    res.status(500).json({ msg: "Server Error! Please Try Again" });
   }
 });
 
@@ -145,14 +145,14 @@ router.post("/enroll/:id", authorization, async (req, res) => {
     if (isEnrolled) {
       return res
         .status(400)
-        .json({ message: "Student is already enrolled to this subject" });
+        .json({ msg: "Student is already enrolled to this subject" });
     }
 
     let subject = await new Subject(subjectFields);
     await subject.save();
     return res.json(subject);
   } catch (error) {
-    res.status(500).json({ message: "Server Error" });
+    res.status(500).json({ msg: "Server Error" });
   }
 });
 
@@ -242,9 +242,9 @@ router.put("/grades/:id", authorization, async (req, res) => {
 
   try {
     await Subject.findById(id).updateOne(subjectFields);
-    return res.json({ message: "Updated" });
+    return res.json({ msg: "Updated" });
   } catch (error) {
-    res.status(500).json({ message: "Server error. Please try again" });
+    res.status(500).json({ msg: "Server error. Please try again" });
   }
 });
 
@@ -257,12 +257,12 @@ router.delete("/delete/:subjectId", authorization, async (req, res) => {
   try {
     let subject = await Subject.findById(subjectId);
     if (!subject) {
-      return res.status(404).json({ message: "No subject found" });
+      return res.status(404).json({ msg: "No subject found" });
     }
     await subject.remove();
-    res.json({ message: "Deleted Successfuly" });
+    res.json({ msg: "Deleted Successfuly" });
   } catch (error) {
-    res.status(500).json({ message: "Server Error please try again." });
+    res.status(500).json({ msg: "Server Error please try again." });
   }
 });
 

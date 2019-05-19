@@ -1,12 +1,13 @@
 import { Button, TextField } from "@material-ui/core";
-import axios from "axios";
 import PropTypes from "prop-types";
 import React, { Fragment, useState } from "react";
 import { connect } from "react-redux";
+import { Redirect } from "react-router-dom";
 import { setAlert } from "../../actions/alert";
+import { registerUser } from "../../actions/authAction";
 import "./Register.css";
 
-const Register = ({ setAlert }) => {
+const Register = ({ setAlert, registerUser, isAuthenticated }) => {
   const [registerData, setRegisterData] = useState({
     schoolId: "",
     firstName: "",
@@ -32,33 +33,15 @@ const Register = ({ setAlert }) => {
   const onSubmit = async e => {
     e.preventDefault();
     if (password !== password2) {
-      setAlert("Passwords do not match", "secondary");
+      setAlert("Passwords do not match", "secondary", 5000);
     } else {
-      const registerUser = {
-        schoolId,
-        firstName,
-        lastName,
-        email,
-        password
-      };
-
-      try {
-        const config = {
-          headers: {
-            "Content-Type": "application/json"
-          }
-        };
-
-        const body = JSON.stringify(registerUser);
-
-        const res = await axios.post("/api/user/register", body, config);
-
-        console.log(res.data);
-      } catch (error) {
-        console.error(error.message);
-      }
+      registerUser({ schoolId, firstName, lastName, email, password });
     }
   };
+
+  if (isAuthenticated) {
+    return <Redirect to="/dashboard" />;
+  }
 
   return (
     <Fragment>
@@ -148,10 +131,16 @@ const Register = ({ setAlert }) => {
 };
 
 Register.propTypes = {
-  setAlert: PropTypes.func.isRequired
+  setAlert: PropTypes.func.isRequired,
+  registerUser: PropTypes.func.isRequired,
+  isAuthenticated: PropTypes.bool
 };
 
+const mapStateToProps = state => ({
+  isAuthenticated: state.auth.isAuthenticated
+});
+
 export default connect(
-  null,
-  { setAlert }
+  mapStateToProps,
+  { setAlert, registerUser }
 )(Register);

@@ -29,8 +29,12 @@ router.get("/", authorization, async (req, res) => {
 router.post(
   "/login",
   [
-    check("schoolId", "School ID is required").exists(),
-    check("password", "Password fields is required").exists()
+    check("schoolId", "School ID is required")
+      .not()
+      .isEmpty(),
+    check("password", "Password fields is required")
+      .not()
+      .isEmpty()
   ],
   async (req, res) => {
     const errors = validationResult(req);
@@ -43,13 +47,17 @@ router.post(
       let user = await User.findOne({ schoolId });
       //Check if the user exists
       if (!user) {
-        return res.status(400).json({ message: "Invalid Credentials" });
+        return res
+          .status(400)
+          .json({ errors: [{ msg: "Invalid Credentials" }] });
       }
       const isMatch = await bcrypt.compare(password, user.password);
 
       //Check if the password matches the user.password
       if (!isMatch) {
-        return res.status(400).json({ message: "Invalid Credentials" });
+        return res
+          .status(400)
+          .json({ errors: [{ msg: "Invalid Credentials" }] });
       }
 
       const payload = {
@@ -70,7 +78,7 @@ router.post(
       );
     } catch (error) {
       console.log(error.message);
-      res.status(500).json({ message: "Server Error! Please try again." });
+      res.status(500).json({ msg: "Server Error! Please try again." });
     }
   }
 );
@@ -90,11 +98,11 @@ router.post(
     check("firstName", "First Name field is required")
       .not()
       .isEmpty(),
-    check("lastName", "First Name field is required")
+    check("lastName", "Last Name field is required")
       .not()
       .isEmpty(),
-    check("email", "First Name field is required").isEmail(),
-    check("password", "First Name field is required").isLength({ min: 3 })
+    check("email", "Email field is required").isEmail(),
+    check("password", "Password field is required").isLength({ min: 3 })
   ],
   async (req, res) => {
     const errors = await validationResult(req);
@@ -109,9 +117,7 @@ router.post(
 
       //Check if schoolId already exists
       if (user) {
-        return res
-          .status(400)
-          .json({ errors: [{ message: "School ID Already exists." }] });
+        return res.status(400).json({ msg: "School ID Already exists." });
       } else {
         //Check if there is no user then make the First User the Admin
         const hashedPassword = await bcrypt.hash(password, 12);
@@ -169,11 +175,11 @@ router.post("/makeadmin/:id", authorization, async (req, res) => {
   try {
     let user = await User.findById(id).updateOne({ isAdmin: true });
     if (!user) {
-      return res.status(404).json({ message: "User not found!" });
+      return res.status(404).json({ msg: "User not found!" });
     }
-    res.json({ message: "Updated" });
+    res.json({ msg: "Updated" });
   } catch (error) {
-    res.status(500).json({ message: "Server error, Please try again." });
+    res.status(500).json({ msg: "Server error, Please try again." });
   }
 });
 
@@ -189,7 +195,7 @@ router.post("/removeadmin/:id", authorization, async (req, res) => {
     }
     res.json({ message: "Updated" });
   } catch (error) {
-    res.status(500).json({ message: "Server error, Please try again." });
+    res.status(500).json({ msg: "Server error, Please try again." });
   }
 });
 
@@ -226,7 +232,7 @@ router.put(
 
     try {
       if (newPasswordInput !== confirmNewPasswordInput) {
-        return res.status(404).json({ message: "Invalid Credentials" });
+        return res.status(404).json({ msg: "Invalid Credentials" });
       }
 
       let newPasswordHashed = await bcrypt.hash(newPasswordInput, 12);
@@ -236,13 +242,13 @@ router.put(
       });
 
       if (!user) {
-        return res.status(404).json({ message: "User not found!" });
+        return res.status(404).json({ msg: "User not found!" });
       }
 
-      res.json({ message: "Updated Successfully" });
+      res.json({ msg: "Updated Successfully" });
       //Check if the newPasswordInput is the same as the Confirm Password Input
     } catch (error) {
-      res.status(500).json({ message: "Server error, Please try again." });
+      res.status(500).json({ msg: "Server error, Please try again." });
     }
   }
 );
