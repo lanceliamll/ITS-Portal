@@ -34,7 +34,7 @@ router.get("/student/:id", authorization, async (req, res) => {
   const { id } = req.params;
 
   try {
-    let user = await User.find({ id });
+    let user = await User.find({ id }).populate("user", ["schoolId", "firstName", "lastName"]);
 
     if (!user) {
       res.status(404).json({ msg: "User not found!" });
@@ -48,30 +48,6 @@ router.get("/student/:id", authorization, async (req, res) => {
 
     res.json(subject);
   } catch (error) {
-    res.status(500).json({ msg: "Server Error! Please Try Again" });
-  }
-});
-
-// @Route api/subject/profile
-// Get all enrolled subject
-router.get("/profile", authorization, async (req, res) => {
-  const { id } = req.user;
-
-  try {
-    let subject = await Subject.find({ user: id }).populate("user", [
-      "studentId",
-      "firstName",
-      "lastName"
-    ]);
-
-    if (!subject) {
-      return res.status(400).json({
-        message: "There are no currently enrolled subject to this user"
-      });
-    }
-    res.json(subject);
-  } catch (error) {
-    console.log(error.message);
     res.status(500).json({ msg: "Server Error! Please Try Again" });
   }
 });

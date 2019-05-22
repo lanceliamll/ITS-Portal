@@ -84,7 +84,7 @@ export const registerUser = ({
   });
 
   try {
-    const res = await axios.post("/api/user/register", body, config);
+    const res = await axios.post("api/user/register", body, config);
 
     dispatch({
       type: REGISTER_SUCCESS,

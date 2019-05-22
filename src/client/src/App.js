@@ -11,6 +11,7 @@ import Alert from "./components/layout/Alert";
 import Footer from "./components/layout/Footer";
 import Landing from "./components/layout/Landing";
 import Navbar from "./components/layout/Navbar";
+import Profile from "./components/profile/Profile";
 import PrivateRoute from "./components/routing/PrivateRoute";
 import setAuthToken from "./helpers/setAuthToken";
 import store from "./store";
@@ -36,6 +37,7 @@ const App = () => {
               <Route exact path="/register" component={Register} />
               <PrivateRoute exact path="/grades" component={Grades} />
               <PrivateRoute exact path="/dashboard" component={Dashboard} />
+              <PrivateRoute exact path="/profile" component={Profile} />
             </Switch>
           </div>
           <Footer />
