@@ -5,10 +5,13 @@ import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import { loadUser } from "./actions/authAction";
 import Login from "./components/auth/Login";
 import Register from "./components/auth/Register";
+import Dashboard from "./components/dashboard/Dashboard";
+import Grades from "./components/grades/Grades";
 import Alert from "./components/layout/Alert";
 import Footer from "./components/layout/Footer";
 import Landing from "./components/layout/Landing";
 import Navbar from "./components/layout/Navbar";
+import PrivateRoute from "./components/routing/PrivateRoute";
 import setAuthToken from "./helpers/setAuthToken";
 import store from "./store";
 
@@ -31,6 +34,8 @@ const App = () => {
             <Switch>
               <Route exact path="/login" component={Login} />
               <Route exact path="/register" component={Register} />
+              <PrivateRoute exact path="/grades" component={Grades} />
+              <PrivateRoute exact path="/dashboard" component={Dashboard} />
             </Switch>
           </div>
           <Footer />

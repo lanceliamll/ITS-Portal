@@ -28,11 +28,18 @@ const Navbar = ({ auth: { isAuthenticated, loading, user }, logoutUser }) => {
   const classes = useStyles();
 
   const adminLinks = (
-    <Button color="inherit">
-      <Link className="text-decoration" to="/enroll">
-        Dashboard
-      </Link>
-    </Button>
+    <Fragment>
+      <Button color="inherit">
+        <Link className="text-decoration" to="/dashboard">
+          Dashboard
+        </Link>
+      </Button>
+      <Button color="inherit">
+        <Link className="text-decoration" to="/records">
+          Records
+        </Link>
+      </Button>
+    </Fragment>
   );
 
   const authenticatedLinks = (
@@ -41,6 +48,11 @@ const Navbar = ({ auth: { isAuthenticated, loading, user }, logoutUser }) => {
       <Button color="inherit">
         <Link className="text-decoration" to="/grades">
           Grades
+        </Link>
+      </Button>
+      <Button color="inherit">
+        <Link className="text-decoration" to="/profile">
+          Profile
         </Link>
       </Button>
       <Button color="inherit">

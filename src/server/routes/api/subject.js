@@ -1,5 +1,6 @@
 const express = require("express");
 const Subject = require("../../models/Subject");
+const User = require("../../models/User");
 const authorization = require("../../middleware/authorization");
 const router = express.Router();
 const validateSubjectInput = require("../../validation/subject");
@@ -17,12 +18,37 @@ router.get("/:subjectName", authorization, async (req, res) => {
       .populate("user", ["schoolId", "firstName", "lastName"]);
 
     if (!subjects) {
-      res.status(404).json({ message: "No subject found!" });
+      res.status(404).json({ msg: "No subject found!" });
     }
 
     res.json(subjects);
   } catch (error) {
-    res.status(500).json({ message: "Server Error! Please Try Again" });
+    res.status(500).json({ msg: "Server Error! Please Try Again" });
+  }
+});
+
+// @Route api/subject/student/:schoolId
+// Get all the subjects by SchoolId
+
+router.get("/student/:id", authorization, async (req, res) => {
+  const { id } = req.params;
+
+  try {
+    let user = await User.find({ id });
+
+    if (!user) {
+      res.status(404).json({ msg: "User not found!" });
+    }
+
+    let subject = await Subject.find({ user: id });
+
+    if (!subject) {
+      res.status(404).json({ msg: "Subject not found!" });
+    }
+
+    res.json(subject);
+  } catch (error) {
+    res.status(500).json({ msg: "Server Error! Please Try Again" });
   }
 });
 
