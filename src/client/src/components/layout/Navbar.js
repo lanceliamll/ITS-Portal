@@ -56,7 +56,7 @@ const Navbar = ({ auth: { isAuthenticated, loading, user }, logoutUser }) => {
         </Link>
       </Button>
       <Button color="inherit">
-        <Link className="text-decoration" to="#!" onClick={logoutUser}>
+        <Link className="text-decoration" to="/login" onClick={logoutUser}>
           Logout
         </Link>
       </Button>

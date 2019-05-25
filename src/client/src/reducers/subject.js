@@ -1,4 +1,8 @@
-import { GET_USER_SUBJECTS, GET_USER_SUBJECTS_ERROR } from "../actions/types";
+import {
+  CLEAR_USER_SUBJECTS,
+  GET_USER_SUBJECTS,
+  GET_USER_SUBJECTS_ERROR
+} from "../actions/types";
 
 const initialState = {
   subject: [],
@@ -21,6 +25,12 @@ export default function(state = initialState, action) {
       return {
         ...state,
         error: payload,
+        loading: false
+      };
+    case CLEAR_USER_SUBJECTS:
+      return {
+        ...state,
+        subjects: [],
         loading: false
       };
     default:

@@ -10,6 +10,10 @@ const SubjectSchema = new Schema({
     type: String,
     required: true
   },
+  sectionName: {
+    type: String,
+    required: true
+  },
   prelimQuiz1: { type: Number, default: 0 },
   prelimQuiz2: { type: Number, default: 0 },
   prelimQuiz3: { type: Number, default: 0 },

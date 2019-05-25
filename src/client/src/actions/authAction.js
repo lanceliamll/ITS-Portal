@@ -3,6 +3,7 @@ import setAuthToken from "../helpers/setAuthToken";
 import { setAlert } from "./alert";
 import {
   AUTH_ERROR,
+  CLEAR_USER_SUBJECTS,
   LOGIN_FAILED,
   LOGIN_SUCCESS,
   LOGOUT_USER,
@@ -105,6 +106,9 @@ export const registerUser = ({
 };
 
 export const logoutUser = () => dispatch => {
+  dispatch({
+    type: CLEAR_USER_SUBJECTS
+  });
   dispatch({
     type: LOGOUT_USER
   });

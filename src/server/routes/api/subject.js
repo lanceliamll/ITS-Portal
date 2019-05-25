@@ -34,7 +34,11 @@ router.get("/student/:id", authorization, async (req, res) => {
   const { id } = req.params;
 
   try {
-    let user = await User.find({ id }).populate("user", ["schoolId", "firstName", "lastName"]);
+    let user = await User.find({ id }).populate("user", [
+      "schoolId",
+      "firstName",
+      "lastName"
+    ]);
 
     if (!user) {
       res.status(404).json({ msg: "User not found!" });
@@ -64,6 +68,7 @@ router.post("/enroll/:id", authorization, async (req, res) => {
   }
   let {
     subjectName,
+    sectionName,
     prelimQuiz1,
     prelimQuiz2,
     prelimQuiz3,
@@ -102,6 +107,7 @@ router.post("/enroll/:id", authorization, async (req, res) => {
   subjectFields.user = id;
 
   if (subjectName) subjectFields.subjectName = subjectName;
+  if (sectionName) subjectFields.sectionName = sectionName;
   if (prelimQuiz1) subjectFields.prelimQuiz1 = prelimQuiz1;
   if (prelimQuiz2) subjectFields.prelimQuiz2 = prelimQuiz2;
   if (prelimQuiz3) subjectFields.prelimQuiz3 = prelimQuiz3;
@@ -169,6 +175,7 @@ router.put("/grades/:id", authorization, async (req, res) => {
   const { id } = req.params;
   let {
     subjectName,
+    sectinName,
     prelimQuiz1,
     prelimQuiz2,
     prelimQuiz3,
@@ -204,6 +211,7 @@ router.put("/grades/:id", authorization, async (req, res) => {
   let subjectFields = {};
 
   if (subjectName) subjectFields.subjectName = subjectName;
+  if (sectionName) subjectFields.sectionName = sectionName;
   if (prelimQuiz1) subjectFields.prelimQuiz1 = prelimQuiz1;
   if (prelimQuiz2) subjectFields.prelimQuiz2 = prelimQuiz2;
   if (prelimQuiz3) subjectFields.prelimQuiz3 = prelimQuiz3;
