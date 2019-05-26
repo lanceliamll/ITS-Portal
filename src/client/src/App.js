@@ -6,7 +6,7 @@ import { loadUser } from "./actions/authAction";
 import Login from "./components/auth/Login";
 import Register from "./components/auth/Register";
 import Dashboard from "./components/dashboard/Dashboard";
-import Grades from "./components/grades/Grades";
+import Grade from "./components/grades/Grade";
 import Alert from "./components/layout/Alert";
 import Footer from "./components/layout/Footer";
 import Landing from "./components/layout/Landing";
@@ -35,9 +35,9 @@ const App = () => {
             <Switch>
               <Route exact path="/login" component={Login} />
               <Route exact path="/register" component={Register} />
-              <PrivateRoute exact path="/grades" component={Grades} />
               <PrivateRoute exact path="/dashboard" component={Dashboard} />
               <PrivateRoute exact path="/profile" component={Profile} />
+              <PrivateRoute exact path="/grade/:id" component={Grade} />
             </Switch>
           </div>
           <Footer />

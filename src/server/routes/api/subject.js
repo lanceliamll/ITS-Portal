@@ -7,6 +7,43 @@ const validateSubjectInput = require("../../validation/subject");
 
 // @GET ROUTES //
 
+//Route api/subject/grade/:id
+router.get("/grade/:id", authorization, async (req, res) => {
+  const { id } = req.params;
+
+  try {
+    let subject = await Subject.findById(id);
+
+    if (!subject) {
+      res.status(404).json({ msg: "No subject found" });
+    }
+
+    res.json(subject);
+  } catch (error) {
+    res.status(500).json({ msg: "Server error! Please try again" });
+  }
+});
+
+//Route api/subject/:sectionName
+//Get all the subject by the section
+
+router.get("/:sectionName", authorization, async (req, res) => {
+  const { sectionName } = req.params;
+
+  try {
+    let sections = await Subject.find({ sectionName });
+
+    if (!sections) {
+      res.status(404).json({ msg: "Section not found!" });
+    }
+
+    res.json(sections);
+    console.log(sections);
+  } catch (error) {
+    res.status(500).json({ msg: "Server Error! Please try again." });
+  }
+});
+
 // @Route api/subject/:subjectName
 // Get all the subjects by name
 router.get("/:subjectName", authorization, async (req, res) => {
@@ -28,7 +65,7 @@ router.get("/:subjectName", authorization, async (req, res) => {
 });
 
 // @Route api/subject/student/:schoolId
-// Get all the subjects by SchoolId
+// Get all the subjects by Student ID
 
 router.get("/student/:id", authorization, async (req, res) => {
   const { id } = req.params;

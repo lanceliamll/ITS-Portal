@@ -1,11 +1,12 @@
 import {
   CLEAR_USER_SUBJECTS,
+  GET_USER_SUBJECT,
   GET_USER_SUBJECTS,
   GET_USER_SUBJECTS_ERROR
 } from "../actions/types";
 
 const initialState = {
-  subject: [],
+  subject: null,
   subjects: [],
   loading: true,
   error: {}
@@ -15,6 +16,12 @@ export default function(state = initialState, action) {
   const { type, payload } = action;
 
   switch (type) {
+    case GET_USER_SUBJECT:
+      return {
+        ...state,
+        subject: payload,
+        loading: false
+      };
     case GET_USER_SUBJECTS:
       return {
         ...state,

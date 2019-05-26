@@ -35,13 +35,12 @@ const useStyles = makeStyles({
 
 const GradeItem = ({
   getUserSubjects,
-  subjects: { subjectName, sectionName }
+  subjects: { subjectName, sectionName, _id }
 }) => {
   const classes = useStyles();
-
   return (
     <div className={classes.root}>
-      <Grid container spacing={3}>
+      <Grid container>
         <Grid item xs={3}>
           <Card className={classes.card}>
             <CardContent>
@@ -54,7 +53,7 @@ const GradeItem = ({
             </CardContent>
             <CardActions>
               <Button size="small">
-                <Link to="/grade">View</Link>
+                <Link to={`/grade/${_id}`}>View</Link>
               </Button>
             </CardActions>
           </Card>

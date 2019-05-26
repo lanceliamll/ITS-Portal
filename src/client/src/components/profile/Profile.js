@@ -2,7 +2,7 @@ import PropTypes from "prop-types";
 import React, { Fragment, useEffect } from "react";
 import { connect } from "react-redux";
 import { getUserSubjects } from "../../actions/subjectActions";
-import GradeItem from "./GradeItem";
+import GradeItem from "../grades/GradeItem";
 
 const Profile = ({
   getUserSubjects,
