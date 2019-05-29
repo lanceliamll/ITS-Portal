@@ -30,8 +30,8 @@ const Navbar = ({ auth: { isAuthenticated, loading, user }, logoutUser }) => {
   const adminLinks = (
     <Fragment>
       <Button color="inherit">
-        <Link className="text-decoration" to="/dashboard">
-          Dashboard
+        <Link className="text-decoration" to="/enroll">
+          Enroll
         </Link>
       </Button>
       <Button color="inherit">
@@ -114,7 +114,7 @@ const Navbar = ({ auth: { isAuthenticated, loading, user }, logoutUser }) => {
 };
 
 Navbar.propTypes = {
-  logout: PropTypes.func.isRequired
+  logoutUser: PropTypes.func.isRequired
 };
 
 const mapStateToProps = state => ({

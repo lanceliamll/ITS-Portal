@@ -6,6 +6,7 @@ import { loadUser } from "./actions/authAction";
 import Login from "./components/auth/Login";
 import Register from "./components/auth/Register";
 import Dashboard from "./components/dashboard/Dashboard";
+import Enroll from "./components/enroll/Enroll";
 import Grade from "./components/grades/Grade";
 import Alert from "./components/layout/Alert";
 import Footer from "./components/layout/Footer";
@@ -37,6 +38,7 @@ const App = () => {
               <Route exact path="/register" component={Register} />
               <PrivateRoute exact path="/dashboard" component={Dashboard} />
               <PrivateRoute exact path="/profile" component={Profile} />
+              <PrivateRoute exact path="/enroll" component={Enroll} />
               <PrivateRoute exact path="/grade/:id" component={Grade} />
             </Switch>
           </div>

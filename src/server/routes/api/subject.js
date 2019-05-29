@@ -93,6 +93,27 @@ router.get("/student/:id", authorization, async (req, res) => {
   }
 });
 
+// @Route api/subject/studentId/:schoolId
+// Get a user {Search}
+
+router.get("/getStudent/:schoolId", authorization, async (req, res) => {
+  const { schoolId } = req.params;
+
+  try {
+    let user = await User.findOne({ schoolId })
+      .sort({ dateCreated: -1 })
+      .populate("user", ["schoolId", "firstName", "lastName"]);
+
+    if (!user) {
+      res.status(404).json({ msg: "Not found!" });
+    }
+
+    res.json(user);
+  } catch (error) {
+    res.status(500).json({ msg: "Server Error! Please Try Again" });
+  }
+});
+
 // @POST ROUTES //
 
 // @Route api/subject/enroll/:id

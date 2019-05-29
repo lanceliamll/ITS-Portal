@@ -65,8 +65,7 @@ const GradeItem = ({
 
 GradeItem.propTypes = {
   subject: PropTypes.object.isRequired,
-  getUserSubjects: PropTypes.func.isRequired,
-  classes: PropTypes.object.isRequired
+  getUserSubjects: PropTypes.func.isRequired
 };
 
 const mapStateToProps = state => ({
