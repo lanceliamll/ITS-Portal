@@ -3,6 +3,7 @@ import setAuthToken from "../helpers/setAuthToken";
 import { setAlert } from "./alert";
 import {
   AUTH_ERROR,
+  CLEAR_USER,
   CLEAR_USER_SUBJECTS,
   LOGIN_FAILED,
   LOGIN_SUCCESS,
@@ -21,6 +22,9 @@ export const loadUser = () => async dispatch => {
   try {
     const res = await axios.get("/api/user");
 
+    dispatch({
+      type: CLEAR_USER
+    });
     dispatch({
       type: USER_LOADED,
       payload: res.data

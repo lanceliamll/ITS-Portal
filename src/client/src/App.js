@@ -3,9 +3,9 @@ import React, { Fragment, useEffect } from "react";
 import { Provider } from "react-redux";
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import { loadUser } from "./actions/authAction";
+import MakeAdmin from "./components/admin/MakeAdmin";
 import Login from "./components/auth/Login";
 import Register from "./components/auth/Register";
-import Dashboard from "./components/dashboard/Dashboard";
 import Grade from "./components/grades/Grade";
 import Alert from "./components/layout/Alert";
 import Footer from "./components/layout/Footer";
@@ -35,8 +35,8 @@ const App = () => {
             <Switch>
               <Route exact path="/login" component={Login} />
               <Route exact path="/register" component={Register} />
-              <PrivateRoute exact path="/dashboard" component={Dashboard} />
               <PrivateRoute exact path="/profile" component={Profile} />
+              <PrivateRoute exact path="/makeadmin" component={MakeAdmin} />
               <PrivateRoute exact path="/grade/:id" component={Grade} />
             </Switch>
           </div>

@@ -15,7 +15,7 @@ const Profile = ({
 
   useEffect(() => {
     getUserSubjects(user._id);
-  }, [getUserSubjects]);
+  }, [getUserSubjects, user._id]);
 
   return loading && subjects === [] ? (
     <Fragment>Loading...</Fragment>
