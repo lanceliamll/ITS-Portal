@@ -5,11 +5,11 @@ import CardContent from "@material-ui/core/CardContent";
 import Grid from "@material-ui/core/Grid";
 import Typography from "@material-ui/core/Typography";
 import { makeStyles } from "@material-ui/styles";
+import axios from "axios";
 import PropTypes from "prop-types";
 import React, { Fragment, useState } from "react";
 import { connect } from "react-redux";
-import { Link } from "react-router-dom";
-import { getUser } from "../../actions/adminActions";
+import { getUser, makeUserAnAdmin } from "../../actions/adminActions";
 
 const useStyles = makeStyles({
   card: {
@@ -50,6 +50,26 @@ const MakeAdmin = ({ admin: { loading, user }, getUser }) => {
     getUser(userId);
   };
 
+  const makeUserAdmin = () => {
+    let confirmAdmin = window.confirm(
+      "Are you sure do you want to make this user an Admin?"
+    );
+    if (confirmAdmin) {
+      axios.post(`/api/user/makeadmin/${user._id}`);
+      window.location.reload();
+    }
+  };
+
+  const removeUserAdmin = () => {
+    let confirmAdmin = window.confirm(
+      "Are you sure do you want to remove this user as an Admin?"
+    );
+    if (confirmAdmin) {
+      axios.post(`/api/user/removeadmin/${user._id}`);
+      window.location.reload();
+    }
+  };
+
   return (
     <Fragment>
       <div>
@@ -84,9 +104,17 @@ const MakeAdmin = ({ admin: { loading, user }, getUser }) => {
                   </Typography>
                 </CardContent>
                 <CardActions>
-                  <Button size="small">
-                    <Link to="#!">Make Admin</Link>
-                  </Button>
+                  {user.isAdmin === true ? (
+                    <Fragment>
+                      <Button size="small" onClick={removeUserAdmin}>
+                        Remove as Admin
+                      </Button>
+                    </Fragment>
+                  ) : (
+                    <Button size="small" onClick={makeUserAdmin}>
+                      Make Admin
+                    </Button>
+                  )}
                 </CardActions>
               </Card>
             </Grid>
@@ -98,6 +126,7 @@ const MakeAdmin = ({ admin: { loading, user }, getUser }) => {
 };
 
 MakeAdmin.propTypes = {
+  makeUserAnAdmin: PropTypes.func.isRequired,
   getUser: PropTypes.func.isRequired
 };
 
@@ -107,5 +136,5 @@ const mapStateToProps = state => ({
 
 export default connect(
   mapStateToProps,
-  { getUser }
+  { makeUserAnAdmin, getUser }
 )(MakeAdmin);

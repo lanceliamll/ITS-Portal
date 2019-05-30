@@ -191,9 +191,9 @@ router.post("/removeadmin/:id", authorization, async (req, res) => {
   try {
     let user = await User.findById(id).updateOne({ isAdmin: false });
     if (!user) {
-      return res.status(404).json({ message: "User not found!" });
+      return res.status(404).json({ msg: "User not found!" });
     }
-    res.json({ message: "Updated" });
+    res.json({ msg: "Updated" });
   } catch (error) {
     res.status(500).json({ msg: "Server error, Please try again." });
   }

@@ -1,4 +1,10 @@
-import { CLEAR_USER, GET_USER, GET_USERS_FAILED } from "../actions/types";
+import {
+  CLEAR_USER,
+  GET_USER,
+  GET_USERS_FAILED,
+  MAKE_USER_ADMIN,
+  MAKE_USER_ADMIN_FAILED
+} from "../actions/types";
 
 const initialState = {
   loading: true,
@@ -11,6 +17,12 @@ export default function(state = initialState, action) {
   const { payload, type } = action;
 
   switch (type) {
+    case MAKE_USER_ADMIN:
+      return {
+        ...state,
+        loading: false,
+        user: payload
+      };
     case GET_USER:
       return {
         ...state,
@@ -19,6 +31,7 @@ export default function(state = initialState, action) {
       };
     case GET_USERS_FAILED:
     case CLEAR_USER:
+    case MAKE_USER_ADMIN_FAILED:
       return {
         ...state,
         user: null,
