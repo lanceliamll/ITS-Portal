@@ -9,6 +9,23 @@ const router = express.Router();
 
 // @GET REQUESTS //
 
+// @Route api/user/students
+// Get all the students
+router.get("/students", authorization, async (req, res) => {
+  try {
+    //Find all the users except the admins
+    let users = await User.find({ isAdmin: false });
+
+    if (!users) {
+      res.status(404).json({ msg: "No users found" });
+    }
+
+    res.json(users);
+  } catch (error) {
+    res.status(500).json({ msg: "Server Error, Please try again" });
+  }
+});
+
 // @Route api/user
 router.get("/", authorization, async (req, res) => {
   //Get the ID from the Request Header

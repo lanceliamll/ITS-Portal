@@ -4,6 +4,7 @@ import { Provider } from "react-redux";
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import { loadUser } from "./actions/authAction";
 import MakeAdmin from "./components/admin/MakeAdmin";
+import Students from "./components/admin/Students";
 import Login from "./components/auth/Login";
 import Register from "./components/auth/Register";
 import Grade from "./components/grades/Grade";
@@ -36,6 +37,7 @@ const App = () => {
               <Route exact path="/login" component={Login} />
               <Route exact path="/register" component={Register} />
               <PrivateRoute exact path="/profile" component={Profile} />
+              <PrivateRoute exact path="/students" component={Students} />
               <PrivateRoute exact path="/makeadmin" component={MakeAdmin} />
               <PrivateRoute exact path="/grade/:id" component={Grade} />
             </Switch>

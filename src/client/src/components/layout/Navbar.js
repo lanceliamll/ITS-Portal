@@ -35,8 +35,8 @@ const Navbar = ({ auth: { isAuthenticated, loading, user }, logoutUser }) => {
         </Link>
       </Button>
       <Button color="inherit">
-        <Link className="text-decoration" to="/records">
-          Records
+        <Link className="text-decoration" to="/students">
+          Students
         </Link>
       </Button>
     </Fragment>

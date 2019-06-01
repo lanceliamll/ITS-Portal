@@ -1,6 +1,7 @@
 import {
   CLEAR_USER,
   GET_USER,
+  GET_USERS,
   GET_USERS_FAILED,
   MAKE_USER_ADMIN,
   MAKE_USER_ADMIN_FAILED
@@ -17,12 +18,19 @@ export default function(state = initialState, action) {
   const { payload, type } = action;
 
   switch (type) {
+    case GET_USERS:
+      return {
+        ...state,
+        users: payload,
+        loading: false
+      };
     case MAKE_USER_ADMIN:
       return {
         ...state,
         loading: false,
         user: payload
       };
+
     case GET_USER:
       return {
         ...state,
