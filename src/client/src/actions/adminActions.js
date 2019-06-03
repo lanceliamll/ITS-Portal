@@ -52,6 +52,9 @@ export const getUsers = () => async dispatch => {
     const res = await axios.get("/api/user/students");
 
     dispatch({
+      type: CLEAR_USER
+    });
+    dispatch({
       type: CLEAR_USERS
     });
     dispatch({

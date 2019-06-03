@@ -67,20 +67,19 @@ const Students = ({ admin: { users, user }, getUsers, getUser }) => {
             Search
           </Button>
         </div>
-
-        {users && user === null ? (
-          <div className="student-main-table">
-            <Paper className={classes.root}>
-              <Table className={classes.table}>
-                <TableHead>
-                  <TableRow>
-                    <TableCell>Actions</TableCell>
-                    <TableCell align="right">StudentID</TableCell>
-                    <TableCell align="right">First Name</TableCell>
-                    <TableCell align="right">Last Name</TableCell>
-                    <TableCell align="right">Email</TableCell>
-                  </TableRow>
-                </TableHead>
+        <div className="student-main-table">
+          <Paper className={classes.root}>
+            <Table className={classes.table}>
+              <TableHead>
+                <TableRow>
+                  <TableCell>Actions</TableCell>
+                  <TableCell align="right">StudentID</TableCell>
+                  <TableCell align="right">First Name</TableCell>
+                  <TableCell align="right">Last Name</TableCell>
+                  <TableCell align="right">Email</TableCell>
+                </TableRow>
+              </TableHead>
+              {users && user === null ? (
                 <TableBody>
                   {users.map(user => (
                     <TableRow key={user && user._id}>
@@ -100,22 +99,7 @@ const Students = ({ admin: { users, user }, getUsers, getUser }) => {
                     </TableRow>
                   ))}
                 </TableBody>
-              </Table>
-            </Paper>
-          </div>
-        ) : (
-          <div className="student-main-table">
-            <Paper className={classes.root}>
-              <Table className={classes.table}>
-                <TableHead>
-                  <TableRow>
-                    <TableCell>Actions</TableCell>
-                    <TableCell align="right">StudentID</TableCell>
-                    <TableCell align="right">First Name</TableCell>
-                    <TableCell align="right">Last Name</TableCell>
-                    <TableCell align="right">Email</TableCell>
-                  </TableRow>
-                </TableHead>
+              ) : (
                 <TableBody>
                   <TableRow key={user && user._id}>
                     <TableCell component="th" scope="row">
@@ -129,10 +113,10 @@ const Students = ({ admin: { users, user }, getUsers, getUser }) => {
                     <TableCell align="right">{user && user.email}</TableCell>
                   </TableRow>
                 </TableBody>
-              </Table>
-            </Paper>
-          </div>
-        )}
+              )}
+            </Table>
+          </Paper>
+        </div>
       </div>
     </Fragment>
   );
