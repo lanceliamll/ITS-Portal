@@ -1,6 +1,7 @@
 import {
   CLEAR_USER,
   CLEAR_USERS,
+  ENROLL_STUDENT_FAILED,
   GET_USER,
   GET_USERS,
   GET_USERS_FAILED,
@@ -51,6 +52,7 @@ export default function(state = initialState, action) {
       };
     case GET_USERS_FAILED:
     case MAKE_USER_ADMIN_FAILED:
+    case ENROLL_STUDENT_FAILED:
       return {
         ...state,
         user: null,

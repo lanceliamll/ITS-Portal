@@ -3,6 +3,7 @@ import React, { Fragment, useEffect } from "react";
 import { Provider } from "react-redux";
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import { loadUser } from "./actions/authAction";
+import Enroll from "./components/admin/Enroll";
 import MakeAdmin from "./components/admin/MakeAdmin";
 import Students from "./components/admin/Students";
 import Login from "./components/auth/Login";
@@ -40,6 +41,7 @@ const App = () => {
               <PrivateRoute exact path="/students" component={Students} />
               <PrivateRoute exact path="/makeadmin" component={MakeAdmin} />
               <PrivateRoute exact path="/grade/:id" component={Grade} />
+              <PrivateRoute exact path="/student/:id" component={Enroll} />
             </Switch>
           </div>
           <Footer />

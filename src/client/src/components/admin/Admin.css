@@ -12,3 +12,8 @@
 .admin-main {
   height: 100vh;
 }
+
+.link-decoration {
+  text-decoration: none;
+  color: Black;
+}

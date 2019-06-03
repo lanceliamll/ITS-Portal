@@ -10,6 +10,7 @@ import PropTypes from "prop-types";
 import React, { Fragment, useState } from "react";
 import { connect } from "react-redux";
 import { getUser, makeUserAnAdmin } from "../../actions/adminActions";
+import { setAlert } from "../../actions/alert";
 import "./Admin.css";
 
 const useStyles = makeStyles({
@@ -34,7 +35,7 @@ const useStyles = makeStyles({
   }
 });
 
-const MakeAdmin = ({ admin: { loading, user }, getUser }) => {
+const MakeAdmin = ({ admin: { loading, user }, getUser, setAlert }) => {
   const classes = useStyles();
   const [userInput, setUserInput] = useState({
     userId: ""
@@ -47,8 +48,12 @@ const MakeAdmin = ({ admin: { loading, user }, getUser }) => {
   };
 
   //Action
-  const searchUser = () => {
-    getUser(userId);
+  const searchUser = async () => {
+    if (userId === "") {
+      setAlert("Search is empty, Not Found", "secondary", 5000);
+    } else {
+      getUser(userId);
+    }
   };
 
   const makeUserAdmin = () => {
@@ -134,7 +139,8 @@ const MakeAdmin = ({ admin: { loading, user }, getUser }) => {
 
 MakeAdmin.propTypes = {
   makeUserAnAdmin: PropTypes.func.isRequired,
-  getUser: PropTypes.func.isRequired
+  getUser: PropTypes.func.isRequired,
+  setAlert: PropTypes.func.isRequired
 };
 
 const mapStateToProps = state => ({
@@ -143,5 +149,5 @@ const mapStateToProps = state => ({
 
 export default connect(
   mapStateToProps,
-  { makeUserAnAdmin, getUser }
+  { makeUserAnAdmin, getUser, setAlert }
 )(MakeAdmin);

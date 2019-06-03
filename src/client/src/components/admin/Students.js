@@ -9,7 +9,9 @@ import { makeStyles } from "@material-ui/styles";
 import PropTypes from "prop-types";
 import React, { Fragment, useEffect, useState } from "react";
 import { connect } from "react-redux";
+import { Link } from "react-router-dom";
 import { getUser, getUsers } from "../../actions/adminActions";
+import { setAlert } from "../../actions/alert";
 import "./Admin.css";
 
 const useStyles = makeStyles({
@@ -23,7 +25,7 @@ const useStyles = makeStyles({
   }
 });
 
-const Students = ({ admin: { users, user }, getUsers, getUser }) => {
+const Students = ({ admin: { users, user }, getUsers, getUser, setAlert }) => {
   const classes = useStyles();
 
   useEffect(() => {
@@ -42,7 +44,11 @@ const Students = ({ admin: { users, user }, getUsers, getUser }) => {
 
   //Action
   const searchUser = () => {
-    getUser(userId);
+    if (userId === "") {
+      setAlert("Search is empty", "secondary", 5000);
+    } else {
+      getUser(userId);
+    }
   };
 
   return (
@@ -84,7 +90,14 @@ const Students = ({ admin: { users, user }, getUsers, getUser }) => {
                   {users.map(user => (
                     <TableRow key={user && user._id}>
                       <TableCell component="th" scope="row">
-                        <Button>Enroll</Button>
+                        <Button>
+                          <Link
+                            className="link-decoration"
+                            to={`/student/${user._id}`}
+                          >
+                            Enroll
+                          </Link>
+                        </Button>
                       </TableCell>
                       <TableCell align="right">
                         {user && user.schoolId}
@@ -103,7 +116,14 @@ const Students = ({ admin: { users, user }, getUsers, getUser }) => {
                 <TableBody>
                   <TableRow key={user && user._id}>
                     <TableCell component="th" scope="row">
-                      <Button>Enroll</Button>
+                      <Button>
+                        <Link
+                          className="link-decoration"
+                          to={`/student/${user._id}`}
+                        >
+                          Enroll
+                        </Link>
+                      </Button>
                     </TableCell>
                     <TableCell align="right">{user && user.schoolId}</TableCell>
                     <TableCell align="right">
@@ -124,7 +144,8 @@ const Students = ({ admin: { users, user }, getUsers, getUser }) => {
 
 Students.propTypes = {
   getUsers: PropTypes.func.isRequired,
-  getUser: PropTypes.func.isRequired
+  getUser: PropTypes.func.isRequired,
+  setAlert: PropTypes.func.isRequired
 };
 
 const mapStateToProps = state => ({
@@ -133,5 +154,5 @@ const mapStateToProps = state => ({
 
 export default connect(
   mapStateToProps,
-  { getUsers, getUser }
+  { getUsers, getUser, setAlert }
 )(Students);
