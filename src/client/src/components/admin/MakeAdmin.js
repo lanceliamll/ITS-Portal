@@ -10,6 +10,7 @@ import PropTypes from "prop-types";
 import React, { Fragment, useState } from "react";
 import { connect } from "react-redux";
 import { getUser, makeUserAnAdmin } from "../../actions/adminActions";
+import "./Admin.css";
 
 const useStyles = makeStyles({
   card: {
@@ -72,55 +73,61 @@ const MakeAdmin = ({ admin: { loading, user }, getUser }) => {
 
   return (
     <Fragment>
-      <div>
-        <TextField
-          type="user"
-          label="Search"
-          margin="normal"
-          variant="outlined"
-          name="userId"
-          value={userId}
-          onChange={e => onChange(e)}
-        />
+      <div className="admin-main">
+        <div>
+          <div>
+            <TextField
+              type="user"
+              label="Search"
+              margin="normal"
+              variant="outlined"
+              name="userId"
+              value={userId}
+              onChange={e => onChange(e)}
+            />
+          </div>
 
-        <Button onClick={searchUser} variant="contained" color="primary">
-          {" "}
-          Nice
-        </Button>
-      </div>
-      {user === null ? (
-        <Fragment>Nothing to show</Fragment>
-      ) : (
-        <div className={classes.root}>
-          <Grid container>
-            <Grid item xs={3}>
-              <Card className={classes.card}>
-                <CardContent>
-                  <Typography variant="body2" component="p">
-                    School ID: <b>{user && user.schoolId}</b>
-                  </Typography>
-                  <Typography variant="body2" component="p">
-                    Name: <b>{user && user.firstName + " " + user.lastName}</b>
-                  </Typography>
-                </CardContent>
-                <CardActions>
-                  {user.isAdmin === true ? (
-                    <Fragment>
-                      <Button size="small" onClick={removeUserAdmin}>
-                        Remove as Admin
-                      </Button>
-                    </Fragment>
-                  ) : (
-                    <Button size="small" onClick={makeUserAdmin}>
-                      Make Admin
-                    </Button>
-                  )}
-                </CardActions>
-              </Card>
-            </Grid>
-          </Grid>
+          <Button onClick={searchUser} variant="contained" color="primary">
+            {" "}
+            Search
+          </Button>
         </div>
-      )}
+
+        {user === null ? (
+          <Fragment>Nothing to show</Fragment>
+        ) : (
+          <div className={classes.root}>
+            <Grid container>
+              <Grid item xs={3}>
+                <Card className={classes.card}>
+                  <CardContent>
+                    <Typography variant="body2" component="p">
+                      School ID: <b>{user && user.schoolId}</b>
+                    </Typography>
+                    <Typography variant="body2" component="p">
+                      Name:{" "}
+                      <b>{user && user.firstName + " " + user.lastName}</b>
+                    </Typography>
+                  </CardContent>
+                  <CardActions>
+                    {user.isAdmin === true ? (
+                      <Fragment>
+                        <Button size="small" onClick={removeUserAdmin}>
+                          Remove as Admin
+                        </Button>
+                      </Fragment>
+                    ) : (
+                      <Button size="small" onClick={makeUserAdmin}>
+                        Make Admin
+                      </Button>
+                    )}
+                  </CardActions>
+                </Card>
+              </Grid>
+            </Grid>
+          </div>
+        )}
+      </div>
     </Fragment>
   );
 };

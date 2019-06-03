@@ -1,6 +1,7 @@
 import axios from "axios";
 import {
   CLEAR_USER,
+  CLEAR_USERS,
   GET_USER,
   GET_USERS,
   GET_USERS_FAILED,
@@ -48,7 +49,7 @@ export const getUsers = () => async dispatch => {
     const res = await axios.get("/api/user/students");
 
     dispatch({
-      type: CLEAR_USER
+      type: CLEAR_USERS
     });
     dispatch({
       type: GET_USERS,

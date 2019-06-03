@@ -12,6 +12,7 @@ export const GET_USER_SUBJECT = "GET_USER_SUBJECT";
 export const GET_USER_SUBJECTS_ERROR = "GET_USER_SUBJECTS_ERROR";
 export const CLEAR_USER_SUBJECTS = "CLEAR_USER_SUBJECTS";
 export const CLEAR_USER = "CLEAR_USER";
+export const CLEAR_USERS = "CLEAR_USERS";
 export const GET_USER = "GET_USER";
 export const GET_USERS = "GET_USERS";
 export const GET_USERS_FAILED = "GET_USERS_FAILED";

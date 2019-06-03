@@ -1,5 +1,6 @@
 import {
   CLEAR_USER,
+  CLEAR_USERS,
   GET_USER,
   GET_USERS,
   GET_USERS_FAILED,
@@ -18,6 +19,12 @@ export default function(state = initialState, action) {
   const { payload, type } = action;
 
   switch (type) {
+    case GET_USER:
+      return {
+        ...state,
+        user: payload,
+        loading: false
+      };
     case GET_USERS:
       return {
         ...state,
@@ -30,15 +37,19 @@ export default function(state = initialState, action) {
         loading: false,
         user: payload
       };
-
-    case GET_USER:
+    case CLEAR_USERS:
       return {
         ...state,
-        user: payload,
+        users: [],
+        loading: false
+      };
+    case CLEAR_USER:
+      return {
+        ...state,
+        user: null,
         loading: false
       };
     case GET_USERS_FAILED:
-    case CLEAR_USER:
     case MAKE_USER_ADMIN_FAILED:
       return {
         ...state,

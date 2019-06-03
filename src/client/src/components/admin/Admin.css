@@ -1,0 +1,14 @@
+.student-main-table {
+  padding-top: 50px;
+  top: 50%;
+  text-align: center;
+  padding-bottom: 10%;
+}
+
+.student-main {
+  height: 100vh;
+}
+
+.admin-main {
+  height: 100vh;
+}
