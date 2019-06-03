@@ -17,6 +17,9 @@ export const getUser = id => async dispatch => {
       type: CLEAR_USER
     });
     dispatch({
+      type: CLEAR_USERS
+    });
+    dispatch({
       type: GET_USER,
       payload: res.data
     });
