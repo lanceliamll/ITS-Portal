@@ -1,5 +1,7 @@
 import {
   CLEAR_USER_SUBJECTS,
+  GET_SUBJECT_BY_USERID,
+  GET_SUBJECT_BY_USERID_FAILED,
   GET_USER_SUBJECT,
   GET_USER_SUBJECTS,
   GET_USER_SUBJECTS_ERROR
@@ -16,6 +18,12 @@ export default function(state = initialState, action) {
   const { type, payload } = action;
 
   switch (type) {
+    case GET_SUBJECT_BY_USERID:
+      return {
+        ...state,
+        subjects: payload,
+        loading: false
+      };
     case GET_USER_SUBJECT:
       return {
         ...state,
@@ -29,6 +37,7 @@ export default function(state = initialState, action) {
         loading: false
       };
     case GET_USER_SUBJECTS_ERROR:
+    case GET_SUBJECT_BY_USERID_FAILED:
       return {
         ...state,
         error: payload,

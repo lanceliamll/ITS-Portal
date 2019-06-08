@@ -39,17 +39,17 @@ const Navbar = ({ auth: { isAuthenticated, loading, user }, logoutUser }) => {
           Students
         </Link>
       </Button>
+      <Button color="inherit">
+        <Link className="text-decoration" to="/admingetuser">
+          Grades
+        </Link>
+      </Button>
     </Fragment>
   );
 
   const authenticatedLinks = (
     <div>
       {user !== null && user.isAdmin ? adminLinks : null}
-      <Button color="inherit">
-        <Link className="text-decoration" to="/grades">
-          Grades
-        </Link>
-      </Button>
       <Button color="inherit">
         <Link className="text-decoration" to="/profile">
           Profile

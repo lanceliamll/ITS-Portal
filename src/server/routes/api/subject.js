@@ -233,7 +233,7 @@ router.put("/grades/:id", authorization, async (req, res) => {
   const { id } = req.params;
   let {
     subjectName,
-    sectinName,
+    sectionName,
     prelimQuiz1,
     prelimQuiz2,
     prelimQuiz3,
